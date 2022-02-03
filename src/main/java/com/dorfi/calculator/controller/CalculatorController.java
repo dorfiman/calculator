@@ -1,8 +1,8 @@
 package com.dorfi.calculator.controller;
 
+import com.dorfi.calculator.aspect.LogExecutionTime;
 import com.dorfi.calculator.service.CalculatorService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.dorfi.calculator.service.ICalculatorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +21,7 @@ public class CalculatorController {
         this.service = service;
     }
 
+    @LogExecutionTime
     @GetMapping("/result")
     public ResponseEntity<Integer> getResult() {
         return new ResponseEntity<>(service.getResult(), HttpStatus.OK);
@@ -38,15 +39,24 @@ public class CalculatorController {
         return ResponseEntity.ok().build();
     }
 
+    @LogExecutionTime
     @PostMapping("/multiply/{value}")
     public ResponseEntity<Void> multiply(@PathVariable int value) {
         service.multiply(value);
         return ResponseEntity.ok().build();
     }
 
+    @LogExecutionTime
     @PostMapping("/divide/{value}")
     public ResponseEntity<String> divide(@PathVariable int value) {
         service.divide(value);
+        return ResponseEntity.ok().build();
+    }
+
+    @LogExecutionTime
+    @PostMapping("/logarithm/{value}")
+    public ResponseEntity<String> logarithm(@PathVariable int value) {
+        service.logarithm(value);
         return ResponseEntity.ok().build();
     }
 
